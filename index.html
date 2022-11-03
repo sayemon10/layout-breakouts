@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Breakouts with CSS Grid</title>
+    <style>
+        .content {
+            --gap: clamp(1rem, 6vw, 3rem);
+            --full: minmax(var(--gap), 1fr);
+            --content: min(50ch, 100% - var(--gap) * 2);
+            --popout: minmax(0, 2rem);
+            --feature: minmax(0, 5rem);
+
+            display: grid;
+            grid-template-columns:
+                [full-start] var(--full) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--content) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--full) [full-end];
+        }
+
+        .content>* {
+            grid-column: content;
+        }
+
+        .popout {
+            grid-column: popout;
+        }
+
+        .feature {
+            grid-column: feature;
+        }
+
+        .full {
+            grid-column: full;
+        }
+
+        /* ---- Debug styles ---- */
+        .debug {
+            position: fixed;
+            top: 0;
+            left: 0;
+            grid-template-rows: 1fr;
+            width: 100%;
+            height: 100vh;
+            mix-blend-mode: multiply;
+            opacity: 0;
+            transition: opacity 200ms ease-out;
+        }
+
+        .debug>* {
+            --pseudo-offset: 0.25rem;
+            position: relative;
+            height: 100vh;
+            grid-row: 1 / -1;
+            border-radius: 0;
+            border-inline: 1px dashed crimson;
+        }
+
+        .debug>*[class]::before,
+        .debug>*[class]::after {
+            content: var(--column);
+            writing-mode: vertical-lr;
+            position: absolute;
+            top: 50%;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            transform: translateY(-50%);
+        }
+
+        .debug>*::before {
+            left: var(--pseudo-offset);
+        }
+
+        .debug>*::after {
+            right: var(--pseudo-offset);
+        }
+
+        .debug>.popout {
+            --column: "Popout";
+        }
+
+        .debug>.feature {
+            --column: "Feature";
+        }
+
+        .debug>.full {
+            --column: "Full";
+        }
+
+        [id="debug"],
+        [id="debug"]+label {
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        [id="debug"] {
+            margin-block: 2rem;
+            margin-inline-start: 1rem;
+        }
+
+        [id="debug"]:checked~.debug {
+            opacity: 1;
+        }
+
+        /* ---- Other styles ---- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0 0 5rem;
+            font-family: system-ui;
+            font-size: 1.125rem;
+        }
+
+        :where(.content > *) {
+            display: grid;
+            place-items: center;
+            height: 5rem;
+            border-radius: 0.5rem;
+            background-color: hotpink;
+        }
+
+        .content:not(.debug) *+* {
+            margin-block-start: 1rem;
+        }
+
+        .popout {
+            background-color: thistle;
+        }
+
+        .feature {
+            background-color: paleturquoise;
+        }
+
+        .full {
+            border-radius: unset;
+            background-color: bisque;
+        }
+    </style>
+</head>
+
+<body>
+    <input id="debug" type="checkbox" />
+    <label for="debug">Show grid lines</label>
+
+    <div class="content">
+        <div>Content</div>
+        <div class="popout">Popout</div>
+        <div>Content</div>
+        <div>Content</div>
+        <div class="feature">Feature</div>
+        <div>Content</div>
+        <div>Content</div>
+        <div>Content</div>
+        <div class="full">Full</div>
+        <div>Content</div>
+        <div>Content</div>
+        <div>Content</div>
+        <div>Content</div>
+    </div>
+
+    <div class="content debug">
+        <div class="full"></div>
+        <div class="feature"></div>
+        <div class="popout"></div>
+        <div></div>
+    </div>
+</body>
+
+</html>
