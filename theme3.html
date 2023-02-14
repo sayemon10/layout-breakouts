@@ -1,0 +1,114 @@
+<html lang="en-us" dir="ltr" class="theme-third">
+
+<head>
+    <title>theme switcher</title>
+    <style>
+        .theme-default {
+            --accent-color: #72f1b8;
+            --font-color: #34294f;
+        }
+
+        .theme-second {
+            --accent-color: #FFBF00;
+            --font-color: #59316B;
+        }
+
+        .theme-third {
+            --accent-color: #d9455f;
+            --font-color: #303960;
+        }
+
+        body {
+            background-color: var(--accent-color);
+            color: var(--font-color);
+        }
+
+        .color-select button {
+            -moz-appearance: none;
+            appearance: none;
+            border: 2px solid;
+            border-radius: 9999px;
+            cursor: pointer;
+            height: 20px;
+            margin: 0 0.8rem 0.8rem 0;
+            outline: 0;
+            width: 20px;
+        }
+
+        /* Style each swatch to match the corresponding theme */
+        .color-select button:nth-child(1) {
+            background: #72f1b8;
+            border-color: #34294f;
+        }
+
+        .color-select button:nth-child(2) {
+            background: #FFBF00;
+            border-color: #59316B;
+        }
+
+        .color-select button:nth-child(3) {
+            background: #d9455f;
+            border-color: #303960;
+        }
+
+        button:focus,
+        button:focus-within {
+            outline: 1px solid white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="color-select">
+        <button onclick="toggleDefaultTheme()"></button>
+        <button onclick="toggleSecondTheme()"></button>
+        <button onclick="toggleThirdTheme()"></button>
+    </div>
+    <h1>Hello World</h1>
+    <script>
+        // Set a given theme/color-scheme
+        function setTheme(themeName) {
+            localStorage.setItem('theme', themeName);
+            document.documentElement.className = themeName;
+        }
+
+        // Toggle between color themes
+        function toggleDefaultTheme() {
+            if (localStorage.getItem('theme') !== 'theme-default') {
+                setTheme('theme-default');
+            }
+        }
+        function toggleSecondTheme() {
+            if (localStorage.getItem('theme') !== 'theme-second') {
+                setTheme('theme-second');
+            }
+        }
+        function toggleThirdTheme() {
+            if (localStorage.getItem('theme') !== 'theme-third') {
+                setTheme('theme-third');
+            }
+        }
+
+        // Immediately set the theme on initial load
+        (function () {
+            if (localStorage.getItem('theme') === 'theme-default') {
+                setTheme('theme-default');
+            }
+            if (localStorage.getItem('theme') === 'theme-second') {
+                setTheme('theme-second');
+            }
+            if (localStorage.getItem('theme') === 'theme-third') {
+                setTheme('theme-third');
+            }
+        })();
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>

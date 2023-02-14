@@ -1,0 +1,125 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>button theme</title>
+    <style>
+        .b-site--theme-control {
+            font-size: 0.9em;
+            text-transform: lowercase;
+            color: #cdc0bf;
+            cursor: pointer;
+            border-width: initial;
+            border-style: none;
+            border-color: initial;
+            border-image: initial;
+            background: 0px 0px;
+        }
+
+        .t-dark {
+            --bg: #211e1e;
+            --header-color: #dad0cf;
+            --body-color: #cdc0bf;
+            --link-hover: #57dbe6;
+            --link-teal: #4dc0cb;
+            --link-teal-hover: #61a3ff;
+            --code-bg: #cdc0bf;
+            --code-color: #2d4c77;
+        }
+
+        .b-icon--sun,
+        .b-icon--moon {
+            height: 25px;
+            width: auto;
+        }
+
+        .b-icon {
+            fill: #cdc0bf;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        body {
+            background: var(--bg);
+        }
+    </style>
+</head>
+
+<body class="t-dark">
+    <button class="b-site--theme-control" id="theme-control">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="b-icon b-icon--sun" style="display: inline;">
+            <g data-name="Layer 2">
+                <g data-name="sun">
+                    <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"></rect>
+                    <path d="M12 6a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1z"></path>
+                    <path d="M21 11h-2a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2z"></path>
+                    <path d="M6 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h2a1 1 0 0 0 1-1z"></path>
+                    <path
+                        d="M6.22 5a1 1 0 0 0-1.39 1.47l1.44 1.39a1 1 0 0 0 .73.28 1 1 0 0 0 .72-.31 1 1 0 0 0 0-1.41z">
+                    </path>
+                    <path
+                        d="M17 8.14a1 1 0 0 0 .69-.28l1.44-1.39A1 1 0 0 0 17.78 5l-1.44 1.42a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.31z">
+                    </path>
+                    <path d="M12 18a1 1 0 0 0-1 1v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-1-1z"></path>
+                    <path
+                        d="M17.73 16.14a1 1 0 0 0-1.39 1.44L17.78 19a1 1 0 0 0 .69.28 1 1 0 0 0 .72-.3 1 1 0 0 0 0-1.42z">
+                    </path>
+                    <path
+                        d="M6.27 16.14l-1.44 1.39a1 1 0 0 0 0 1.42 1 1 0 0 0 .72.3 1 1 0 0 0 .67-.25l1.44-1.39a1 1 0 0 0-1.39-1.44z">
+                    </path>
+                    <path d="M12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4zm0 6a2 2 0 1 1 2-2 2 2 0 0 1-2 2z"></path>
+                </g>
+            </g>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="b-icon b-icon--moon" style="display: none;">
+            <g data-name="Layer 2">
+                <g data-name="moon">
+                    <rect width="24" height="24" opacity="0"></rect>
+                    <path
+                        d="M12.3 22h-.1a10.31 10.31 0 0 1-7.34-3.15 10.46 10.46 0 0 1-.26-14 10.13 10.13 0 0 1 4-2.74 1 1 0 0 1 1.06.22 1 1 0 0 1 .24 1 8.4 8.4 0 0 0 1.94 8.81 8.47 8.47 0 0 0 8.83 1.94 1 1 0 0 1 1.27 1.29A10.16 10.16 0 0 1 19.6 19a10.28 10.28 0 0 1-7.3 3zM7.46 4.92a7.93 7.93 0 0 0-1.37 1.22 8.44 8.44 0 0 0 .2 11.32A8.29 8.29 0 0 0 12.22 20h.08a8.34 8.34 0 0 0 6.78-3.49A10.37 10.37 0 0 1 7.46 4.92z">
+                    </path>
+                </g>
+            </g>
+        </svg>
+        <span class="b-site--theme-text">too dark?</span>
+    </button>
+    <script>
+        const toggle = document.getElementById('theme-control')
+            , text = document.querySelector('.b-site--theme-text')
+            , moonSVG = document.querySelector('.b-icon--moon')
+            , sunSVG = document.querySelector('.b-icon--sun');
+        function themeOff() {
+            document.body.classList.add('t-dark');
+            sunSVG.style.display = "inline";
+            moonSVG.style.display = "none";
+            text.innerText = "too dark?"
+        }
+        if (localStorage.getItem('t-dark')) {
+            themeOff();
+        } else {
+            moonSVG.style.display = "inline";
+        }
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (document.body.classList.contains('t-dark')) {
+                document.body.classList.remove('t-dark');
+                moonSVG.style.display = "inline";
+                sunSVG.style.display = "none";
+                text.innerText = "too bright?"
+                localStorage.removeItem('t-dark')
+            } else {
+                themeOff();
+                localStorage.setItem('t-dark', true)
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>
